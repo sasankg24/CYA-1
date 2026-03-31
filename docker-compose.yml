@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16
+    container_name: dogs_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - dogs_pg_data:/var/lib/postgresql/data
+
+  test_db:
+    image: postgres:16
+    container_name: dogs_postgres_test
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: dogs_test_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - dogs_pg_test_data:/var/lib/postgresql/data
+
+volumes:
+  dogs_pg_data:
+  dogs_pg_test_data:
+
+
